@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 /**
- * @property string $name;
+ * @property string $language;
  * @property string $created_at;
  * @property string $updated_at;
  * @property string $deleted_at;
@@ -21,7 +21,8 @@ class Language extends Model
     protected $keyType = 'integer';
     
     protected $fillable = [
-        'name',
+        'id',
+        'language',
         'created_at',
         'updated_at',
         'deleted_at'

@@ -14,10 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('languages', function (Blueprint $table) {
-            $table->engine='InnoDB';
-
             $table->id();
-            $table->name();
+            $table->string ('language');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('languages');
+        Schema::dropIfExists('language');
     }
 };
