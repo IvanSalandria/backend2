@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use  App\Models\User;
 
+
 class AuthController extends Controller
 {
 
@@ -85,4 +86,5 @@ class AuthController extends Controller
             'expires_in' => auth('api')->factory()->getTTL() * 60 * 24
         ]);
     }
+
 }
