@@ -39,6 +39,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->post('refresh', 'AuthController@refresh');
     
-    $router->post('user-profile', 'AuthController@me');
+    $router->get('user-profile', 'AuthController@me');
 
 });
