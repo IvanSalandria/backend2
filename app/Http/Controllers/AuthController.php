@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use  App\Models\User;
-
+use Exception;
+use PhpParser\Node\Stmt\TryCatch;
 
 class AuthController extends Controller
 {
@@ -55,8 +56,10 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->logout();
-
+        if(auth()->user()) {
+            auth()->logout();
+        }          
+        
         return response()->json(['message' => 'Successfully logged out']);
     }
 
@@ -67,7 +70,12 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth('api')->refresh());
+        try {
+            return $this->respondWithToken(auth('api')->refresh());
+        } catch (Exception $e) {
+            return response()->json(['message' => 'The token can not be refreshed'], 401);
+        }
+        
     }
 
     /**
