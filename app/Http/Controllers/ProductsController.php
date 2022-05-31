@@ -7,6 +7,10 @@ use App\Models\Product;
 
 class ProductsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['showAllProducts', 'showOneProduct']]);
+    }
     public function showAllProducts()
     {
         return response()->json(Product::all());
@@ -19,7 +23,15 @@ class ProductsController extends Controller
 
     public function create(Request $request)
     {
-        $product = Product::create($request->all());
+        $name = json_encode($request->get("name"));
+
+        $description = json_encode($request->get("description"));
+
+
+        $product = Product::create([
+            "name" => $name,
+            "description" => $description
+        ]);
 
         return response()->json($product, 201);
     }

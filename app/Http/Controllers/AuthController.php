@@ -10,12 +10,11 @@ use PhpParser\Node\Stmt\TryCatch;
 
 class AuthController extends Controller
 {
-
-
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'refresh', 'logout']]);
     }
+
     /**
      * Get a JWT via given credentials.
      *
