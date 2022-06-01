@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use  App\Models\User;
 use Exception;
-use PhpParser\Node\Stmt\TryCatch;
 
 class AuthController extends Controller
 {
@@ -25,7 +23,7 @@ class AuthController extends Controller
     {
 
         $this->validate($request, [
-            'email' => 'required|string',
+            'email' => ['required', 'string'],
             'password' => 'required|string',
         ]);
 

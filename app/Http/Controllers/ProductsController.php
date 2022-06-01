@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-
+use App\Rules\Language;
+use App\Rules\LanguageFormatRule;
 class ProductsController extends Controller
 {
     public function __construct()
@@ -23,10 +24,14 @@ class ProductsController extends Controller
 
     public function create(Request $request)
     {
+        
+        $this->validate($request, [
+            'name' => ['required', 'array', new LanguageFormatRule()],
+            'description' => ['required', 'array',new LanguageFormatRule() ]
+        ]);
+
         $name = json_encode($request->get("name"));
-
         $description = json_encode($request->get("description"));
-
 
         $product = Product::create([
             "name" => $name,
@@ -38,6 +43,14 @@ class ProductsController extends Controller
 
     public function update($id, Request $request)
     {
+        $this->validate($request, [
+            'name' => ['required', 'array', new LanguageFormatRule()],
+            'description' => ['required', 'array',new LanguageFormatRule() ]
+        ]);
+
+        $name = json_encode($request->get("name"));
+        $description = json_encode($request->get("description"));
+
         $product = Product::findOrFail($id);
         $product->update($request->all());
 
