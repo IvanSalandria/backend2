@@ -27,7 +27,7 @@ class ProductsController extends Controller
         
         $this->validate($request, [
             'name' => ['required', 'array', new LanguageFormatRule()],
-            'description' => ['required', 'array',new LanguageFormatRule() ]
+            'description' => ['required', 'array', new LanguageFormatRule() ]
         ]);
 
         $name = json_encode($request->get("name"));

@@ -41,4 +41,14 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     
     $router->get('user-profile', 'AuthController@me');
 
+    $router->get('contact',  ['uses' => 'ContactFormsController@showAllForms']);
+
+    $router->get('contact/{id}', ['uses' => 'ContactFormsController@showOneForm']);
+
+    $router->post('contact/create', ['uses' => 'ContactFormsController@create']);
+
+    $router->delete('contact/{id}', ['uses' => 'ContactFormsController@delete']);
+
+    $router->put('contact/{id}', ['uses' => 'ContactFormsController@update']);
+
 });
