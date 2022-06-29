@@ -17,6 +17,17 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/doc', function () {
+    return view('index');
+});
+
+$router->get('/swagger', function () {
+    $file_path = __DIR__ . '/../resources/views/swagger.json';
+    $json = json_decode(file_get_contents(realpath($file_path)), true);
+    return response()->json($json);
+});
+
+
 $router->group(['prefix' => 'api'], function () use ($router) {
     
     $router->get('language',  ['uses' => 'LanguagesController@showAllLanguages']);

@@ -1,0 +1,1079 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API Restful",
+    "description": "Esta API se encarga de manejar la información de la base de datos de la empresa Inbox Global.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "language",
+      "description": "Este endpoint maneja toda la información relacionada a los lenguajes del sistema."
+    },
+    {
+      "name": "product",
+      "description": "Este endpoint maneja toda la información relacionada a los productos del sistema."
+    },
+    {
+      "name": "login",
+      "description": "Este endpoint controla la sesión del usuario"
+    },
+    {
+      "name": "contact",
+      "description": "Este endpoint maneja toda la información relacionada a los formularios de contacto del sistema."
+    }
+  ],
+  "paths": {
+    "/language": {
+      "get": {
+        "tags": [
+          "language"
+        ],
+        "summary": "Obtiene la información en todos los lenguajes disponibles en la BD.",
+        "responses": {
+          "200": {
+            "description": "(OK) La información del lenguaje se obtuvo correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfLenguages"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/product": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Obtiene la información de todos los productos disponibles.",
+        "responses": {
+          "200": {
+            "description": "(OK) La información del producto se obtuvo correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfProducts"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Inserta información de nuevo producto.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyProductPost"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(OK) La información del producto se guardo correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExitoProductPost"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Obtiene la información de un producto disponible en la BD.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador del producto a obtener",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK) La información del producto se obtuvo correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductId"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Actualiza la informacion de un producto en la base de datos.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador del producto a editar",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyProductPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "(OK) La información del producto se actualizó correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductId"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Elimina logicamente a un producto.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador del producto a eliminar",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK) El producto se eliminó correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Delete"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Inicia Sesión de la cuenta de administrador.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "(OK) Inicio de sesión correcto.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExitoLogin"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/refresh": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Refresca la sesión de la cuenta de administrador.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Refresh"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/user-profile": {
+      "get": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Obtiene la información del perfil del usuario.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "400": {
+                    "$ref": "#/components/responses/BadRequest"
+                  },
+                  "401": {
+                    "$ref": "#/components/responses/Unauthorized"
+                  },
+                  "404": {
+                    "$ref": "#/components/responses/NotFound"
+                  },
+                  "500": {
+                    "$ref": "#/components/responses/ServerError"
+                  },
+                  "$ref": "#/components/schemas/ExitoLogin"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Cierra Sesión de la cuenta de administrador.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK) Cierre de sesión correcto.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Logout"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/contact/create": {
+      "post": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "Inserta un nuevo formulario.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactsCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(OK) El formulario se creó correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contacts"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/contact": {
+      "get": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "Obtiene la información en todos los formularios de contacto disponibles.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK) La información de los formularios se obtuvo correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfContacts"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/contact/{id}": {
+      "get": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "Obtiene la información de un formulario disponible .",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador del formulario a obtener",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK) La información del formulario se obtuvo correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contacts"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "Actualiza la informacion de un formulario.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador del formulario a obtener",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyProductPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "(OK) La información del producto se actualizó correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExitoProductPost"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "Elimina logicamente a un formulario.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador del formulario a eliminar",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK) El formulario se eliminó correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Delete"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "Unauthorized": {
+        "description": "(Unauthorized) no hay autorización para llamar al servicio"
+      },
+      "NotFound": {
+        "description": "(NotFound) no se encontró la información"
+      },
+      "BadRequest": {
+        "description": "(BadRequest) los datos enviados son incorrectos o hay datos obligatorios no enviados"
+      },
+      "ServerError": {
+        "description": "(ServerError) error en el servidor"
+      }
+    },
+    "parameters": {
+      "token": {
+        "in": "header",
+        "name": "token",
+        "description": "Token de autenticación en API.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "id": {
+        "name": "id",
+        "in": "path",
+        "description": "id de un objeto",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "schemas": {
+      "BodyLenguagesGet": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string",
+            "description": "Lenguaje que vamos a estar solicitando"
+          }
+        }
+      },
+      "Lenguage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "enum": [
+              222
+            ],
+            "description": "id que le corresponde al lenguaje"
+          },
+          "name": {
+            "type": "string",
+            "description": "lenguaje que vamos a solicitar"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "deleted_at": {
+            "type": "string"
+          }
+        }
+      },
+      "ArrayOfLenguages": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Lenguage"
+        }
+      },
+      "ArrayOfProducts": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ProductId"
+        }
+      },
+      "ProductId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id del producto"
+          },
+          "name": {
+            "type": "object",
+            "description": "nombre del producto cargado en la BD.",
+            "properties": {
+              "es": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "pt": {
+                "type": "string"
+              }
+            }
+          },
+          "description": {
+            "type": "object",
+            "description": "descripción del producto cargado en los lenguajes disponibles",
+            "properties": {
+              "es": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "pt": {
+                "type": "string"
+              }
+            }
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "deleted_at": {
+            "type": "string"
+          }
+        }
+      },
+      "ExitoProductGet": {
+        "type": "object",
+        "properties": {
+          "idProduct": {
+            "type": "integer",
+            "enum": [
+              222
+            ],
+            "description": "id que le corresponde al producto"
+          }
+        }
+      },
+      "BodyProductPost": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "object",
+            "description": "nombre del producto cargado en la BD.",
+            "properties": {
+              "es": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "pt": {
+                "type": "string"
+              }
+            }
+          },
+          "description": {
+            "type": "object",
+            "description": "descripción del producto cargado en los lenguajes disponibles",
+            "properties": {
+              "es": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "pt": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ExitoProductPost": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id del producto"
+          },
+          "name": {
+            "type": "object",
+            "description": "nombre del producto cargado.",
+            "properties": {
+              "es": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "pt": {
+                "type": "string"
+              }
+            }
+          },
+          "description": {
+            "type": "object",
+            "description": "descripción del producto cargado en los lenguajes disponibles",
+            "properties": {
+              "es": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "pt": {
+                "type": "string"
+              }
+            }
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "deleted_at": {
+            "type": "string"
+          }
+        }
+      },
+      "BodyProductPut": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "object",
+            "description": "nombre del producto cargado en la BD.",
+            "properties": {
+              "es": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "pt": {
+                "type": "string"
+              }
+            }
+          },
+          "description": {
+            "type": "object",
+            "description": "descripción del producto cargado en los lenguajes disponibles",
+            "properties": {
+              "es": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "pt": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "Delete": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "email para iniciar sesión a la cuenta de administrador"
+          },
+          "password": {
+            "type": "string",
+            "description": "contraseña para iniciar sesión a la cuenta de administrador"
+          }
+        }
+      },
+      "ExitoLogin": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string"
+          },
+          "token_type": {
+            "type": "string"
+          },
+          "expires_in": {
+            "type": "string"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "id del usuario"
+              },
+              "name": {
+                "type": "string",
+                "description": "nombre del usuario"
+              },
+              "email": {
+                "type": "string",
+                "description": "email de la cuenta de administración."
+              },
+              "email_verified_at": {
+                "type": "string",
+                "description": "corroboración si el email está verificado"
+              },
+              "password": {
+                "type": "string",
+                "description": "contraseña de la cuenta de administración."
+              },
+              "remember_token": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string"
+              },
+              "updated_at": {
+                "type": "string"
+              },
+              "deleted_at": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "Refresh": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "token regenerado de acceso"
+          },
+          "token_type": {
+            "type": "string",
+            "description": "tipo de token"
+          },
+          "user": {
+            "type": "string",
+            "description": "cuenta de usuario"
+          },
+          "expires_in": {
+            "type": "number",
+            "description": "tiempo de la sesión."
+          }
+        }
+      },
+      "Logout": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ArrayOfContacts": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Contacts"
+        }
+      },
+      "Contacts": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id del usuario"
+          },
+          "subject": {
+            "type": "string",
+            "description": "nombre del contacto"
+          },
+          "contact": {
+            "type": "number",
+            "description": "numero telefonico para contactar"
+          },
+          "email": {
+            "type": "string",
+            "description": "email de contacto."
+          },
+          "message": {
+            "type": "string",
+            "description": "mensaje de contacto"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "deleted_at": {
+            "type": "string"
+          }
+        }
+      },
+      "ContactsCreate": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "description": "nombre del contacto"
+          },
+          "contact": {
+            "type": "number",
+            "description": "numero telefonico para contactar"
+          },
+          "email": {
+            "type": "string",
+            "description": "email de contacto."
+          },
+          "message": {
+            "type": "string",
+            "description": "mensaje de contacto"
+          }
+        }
+      }
+    }
+  }
+}
