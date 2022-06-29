@@ -18,18 +18,16 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
+    
     $router->get('language',  ['uses' => 'LanguagesController@showAllLanguages']);
   
     $router->get('product',  ['uses' => 'ProductsController@showAllProducts']);
     
     $router->get('product/{id}', ['uses' => 'ProductsController@showOneProduct']);
     
-    
     $router->post('product', ['uses' => 'ProductsController@create']);
     
-    
     $router->delete('product/{id}', ['uses' => 'ProductsController@delete']);
-    
     
     $router->put('product/{id}', ['uses' => 'ProductsController@update']);
 

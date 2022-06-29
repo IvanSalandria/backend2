@@ -24,10 +24,10 @@ class LanguageFormatRule implements Rule
         $isValid =  
             isset($value['es']) &&
             isset($value['en']) &&
-            isset($value['ar']) &&
+            isset($value['pt']) &&
             is_string($value['es']) &&
             is_string($value['en']) &&
-            is_string($value['ar'])
+            is_string($value['pt'])
         ;
 
         return $isValid;
@@ -35,6 +35,6 @@ class LanguageFormatRule implements Rule
 
     public function message(): string 
     {
-        return "The :attribute structure must be {'es': 'value', 'en': 'value', 'ar': 'value'}.";
+        return "The :attribute structure must be {'es': 'value', 'en': 'value', 'pt': 'value'}.";
     }
 }
