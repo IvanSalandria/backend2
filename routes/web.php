@@ -17,7 +17,47 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/doc', function () {
+    return view('index');
+});
+
+$router->get('/swagger', function () {
+    $file_path = __DIR__ . '/../resources/views/swagger.json';
+    $json = json_decode(file_get_contents(realpath($file_path)), true);
+    return response()->json($json);
+});
+
+
 $router->group(['prefix' => 'api'], function () use ($router) {
+    
     $router->get('language',  ['uses' => 'LanguagesController@showAllLanguages']);
   
+    $router->get('product',  ['uses' => 'ProductsController@showAllProducts']);
+    
+    $router->get('product/{id}', ['uses' => 'ProductsController@showOneProduct']);
+    
+    $router->post('product', ['uses' => 'ProductsController@create']);
+    
+    $router->delete('product/{id}', ['uses' => 'ProductsController@delete']);
+    
+    $router->put('product/{id}', ['uses' => 'ProductsController@update']);
+
+    $router->post('login', 'AuthController@login');
+
+    $router->post('logout', 'AuthController@logout');
+
+    $router->post('refresh', 'AuthController@refresh');
+    
+    $router->get('user-profile', 'AuthController@me');
+
+    $router->get('contact',  ['uses' => 'ContactFormsController@showAllForms']);
+
+    $router->get('contact/{id}', ['uses' => 'ContactFormsController@showOneForm']);
+
+    $router->post('contact/create', ['uses' => 'ContactFormsController@create']);
+
+    $router->delete('contact/{id}', ['uses' => 'ContactFormsController@delete']);
+
+    $router->put('contact/{id}', ['uses' => 'ContactFormsController@update']);
+
 });

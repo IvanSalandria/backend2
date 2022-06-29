@@ -7,23 +7,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property string $id;
- * @property string $name;
- * @property string $description;
+ * @property string $subject;
+ * @property string $contact;
+ * @property string $email;
+ * @property string $message;
  * @property string $created_at;
  * @property string $updated_at;
  * @property string $deleted_at;
  */
 
-
-class Product extends Model
+class ContactForm extends Model
 {
     use SoftDeletes;
     protected $keyType = 'integer';
     
     protected $fillable = [
         'id',
-        'name',
-        'description',
+        'subject',
+        'contact',
+        'email',
+        'message',
         'created_at',
         'updated_at',
         'deleted_at'
